@@ -1,0 +1,345 @@
+6/29/99
+
+A morphogenesis experiment.
+
+The purpose of this experiment is to investigate the properties of a
+CA in which the cells exchange mediating signals, as living cells might do.
+A further enhancement would have "hormones" exert more global influences.
+
+The CA consists of an array of "live" and "dead" cells.  Live cells have an
+orientation and color.
+
+Each live cell receives a set of signals from adjacent cells, acts on it,
+and outputs signals to adjacent cells.
+
+The signals form coordinates in a signal space, in which each point 
+provides a programmed action/output.
+
+Actions:
+- Create adjacent live cell (if not blocked). (3 bits)
+- Kill adjacent cell. (3 bits)
+- Reorient adjacent cell (3 bits).
+- Rotate x 1-3. (2 bits)
+- Flip UD/LR (mirror). (2 bits)
+- Set color. (log2 NCOLOR bits, for B/W 1 bit).
+Total: 14 bits.
+
+To evolve using GA:
+The number of bits in the genome is (Action + Output) x Signal space size.
+Signal space size = 2^NSIG for on/off signals.
+
+To reduce, cluster the space?  What else?
+
+--------------------------------------
+
+7/2/99
+
+Revised:
+
+Signals can have varying extents (radii) (on/off over extent).
+Idea here is to use larger signals extents as overarching 
+mediators which turn on/off other signals/actions (like Mona).
+The action/outputs are toggled entities, i.e. once set/unset, they
+must be explicitely unset/set.
+
+Procedure:
+
+1. Input: Live cell senses signals and takes action indicated.
+
+2. Actions: (1) set color, (2), create adj. cells (w/orientation set),
+  (3) kill adj. cells, (4) reorient adj. cells.
+
+3. Output specified signal set.
+
+So, a precursor cell could first create "arms", then based on input
+from arm cells, create legs, then head, etc.
+
+7/5/99
+
+I've started Morphone.java, hopefully with enough mass to enable me to
+pick it up probably in early August, since it must go on ice now until then.
+
+1/26/00
+
+By the way, Tom of last July, I had to figure out the "morphone" was a
+contraction of morpho-hormone, or some such thing.
+
+1/27/00
+
+Settling a bit - coalescing. Annealing?
+With the hormone model, each type of hormone will have a range and
+directionality associated with it, thus allowing symmetries to be
+made and broken.  Hormones will also have colors possibly tagged
+onto them.  Also, each cell will have an function table which
+matches input hormones to output ones.
+
+1/28/00
+
+More ideas:  each hormone can percolate along the 8 possible 
+directions for a limited range.  Also, one of the effects of
+a hormone is to orient the receiving cell according to the
+direction that the hormone arrives from.
+
+2/21/00
+
+Slow going due to hectic life.  However, as I am favored with this
+glimpse into God's mind, I shall keep the metal malleable.
+
+5/11/00
+
+Back to work after submitting Mona to Adaptive Behavior.  Now, where
+was I?
+
+6/1/00
+
+Almost done with core program.  Still haven't heard from Adaptive 
+Behavior about receipt of paper.
+
+6/2/00
+
+Finished coding core today.
+
+6/9/00
+
+Debugging.  Have some ideas about how to evolve and have made some
+preparations for it.
+
+Heard from Adapative Behavior - paper in review.
+
+6/13/00
+
+Still debugging and polishing.  Trying some sample patterns.
+
+6/19/00
+
+Debugging first non-trivial pattern.
+
+6/20/00
+
+Idea: instead of current "condition" implementation, use "weights",
+positive and negative coefficients which when summing to positive,
+can trigger a morphogen.
+
+6/21/00
+
+More thoughts:  1) extent should be the output of the weighting summation,
+and/or, 2) hormones should dissipate/attenuate over their extent.
+
+Trying to relate fractals and chaos to this.
+
+6/30/00
+
+Implementing weights idea.
+
+7/3/00
+
+Got weights, attenuation, and secretion reset done.  Testing example
+pattern.
+
+7/6/00
+
+"Goal post" genotype tested.  "Box" genotype next.  Then on to 
+evolution program.
+
+7/7/00
+
+Tested "Star of David" genotype.  I guess it is time to start the
+evolution program.
+
+7/14/00
+
+Had some complications connected with being able to do fractal-like
+patterns.  I've decided to get the program working, then put the
+evolve program on hold in order to work on other stuff.  
+
+Notes for evolve: I've taken care to quantitize the variables to
+allow them to be laid out in bit patterns for mutation and cross-over.
+See the parameters in Genotype.  Also, if desired to add a probabilistic
+element to the morph, a "random" weight could be attached to the
+processing of each morphogen.
+
+7/17/00
+
+I've decided to let all parameters reside in the evolve program, allowing
+the morph program to accept an unconstrained genotype.
+
+A speculation: is the morphogenesis algorithm amenable to error-reduction
+a la the backpropagation algorithm?  Does the threshold function need
+to be "smoothed" to allow this?  My feeling is that, while some determinism
+must exist to allow for a genetic algorithm to work, this is a weaker
+condition than that which would be necessary for a guaranteed error-reduction.
+But, I don't know.
+
+Finished debugging three examples.  On the shelf it goes.
+
+9/13/00
+
+See IEEE Computer Mag. (9/00) for references to parallel CA machines.
+
+2/12/01
+
+Had a couple of thoughts: If attenuating the hormone output, could
+use a probablistic modulo function to achieve a "tiger stripe" effect.
+Also, could use a negation of an absolute value of a difference to 
+achieve a triggering of an attenuated signal at a specific distance
+without also broadcasting a "one less" inhibition signal.
+
+6/5/01
+
+Yesterday had an idea to embody signals as attenuating sine waves, and
+the outputs are based on a function of combining such to produce further
+sine waves.  But then I thought things wander too far towards the Fourier
+realm.
+
+Now I'm thinking of embodying the genotype as a set of cellular engines,
+each computing some extracellular outputs from intracellular inputs.
+How to represent these machines as bit fields or such for evolution?
+Turing machines?  
+
+6/23/01
+
+Came up with "metabolic" functions for the morphogens.  Must try to get
+to stable state before moving on.
+
+6/25/01
+
+Finished coding.  Test tomorrow.
+
+7/10/01
+
+Got the demos working.
+
+9/26/01
+
+Finished the evolution program.  Need to write phenotype
+pattern builder.
+
+10/4/01
+
+Almost done with pattern painter.
+
+10/11/01
+
+Finished pattern painter.  Starting to debug Evolve.
+
+10/23/01
+
+Decided to change evolution to be more "purposeful".  Will
+have two stages.  Stage one will select quantities of hormones,
+and hormone, color, orientation morphs, and metabolics, randomly
+generating values of these.  Stage one is about determining 
+which amounts genetic material are needed to solve a task.
+Stage two will mutate these quantities, this determining what
+content produces success.  Then take the successful stage one
+genotypes and mutate them by varying quantities, possibly 
+by a hill-climbing process.
+
+11/21/01
+
+Implemented above plan, cleaned up some stuff, and am back at
+testing.
+
+11/30/01
+
+Thinking of changing directions and building a hierarchical
+language to express patterns in.
+
+12/10/01
+
+More on the previous.  Change Metabolic to Morphogen (since metabolic
+energy comsumption, which this is not); remove all three morphogens
+and encapsulate into the morphogenic function.
+
+For validity, must be able to convert morphogenic function into bits,
+representing genetic evolution; for this, should also code in
+terminating codons to isolate mutations to individual morphogens.
+
+12/11/01
+
+Decided to dynamically load a derived class of an abstract Genotype,
+and to hand-code the genotype stuff in the derived class.
+
+12/18/01
+
+Yes, Virginia, I've decided to rip things up and start again.  This
+time hormones will be instantiated objects secreted from cell to
+cell.  The instantiation can take the form of arbitrary parameters,
+including other hormones(!), thus implementing polymorphic hormones.
+Upon absorption, the hormone will be invoked and given the other
+hormones present in the cell as input.  It may be secrete other
+hormones, change color, or vary the orientation of the cell.
+
+12/19/01
+
+The morphone model is still different from other CAs, even ones (I
+can't recall the type name) wherein cells morph depending on a non-
+uniform dispersed set of other cells, this being because of the delay
+factor in hormone propagation.
+
+12/27/01
+
+To build:
+
+- Flower/tree grown from seed
+- Insect from egg containing head, thorax (2/6 legs), abdomen (banded)
+- Spores that bud into fungi that keep spacing between each other; these
+  grow old after releasing spores and die.
+- "Pong" between two paddles.
+- Glider gun, reflector.
+- Fractals: Serpinski triangle, "Mandelbrot", recursive spirals.
+- Turing machine.
+- Music composition.
+
+1/4//02
+
+Got old patterns working, plus a fractal spiral, glider gun, and
+a spiraling glider gun.
+
+1/30/02
+
+For bug, need a genotype that describes architecture.  A gene will 
+indicate the number of segments and the types of each.  For each
+segment type, a shape gene will determine its shape, also its
+coloration (maybe this is global - from highest level?), where it
+should grow relative to other segments, and its features: eyes, legs,
+antennae, etc.  There will also be genes for the types of legs, eyes,
+etc, that may vary.  Thus by mutating the genes, can get various
+types of bugs to hatch.
+
+2/14/02
+
+Ran upon L-Systems, an important capability to be able to model. Am 
+in the process of doing this, which should satisfy the "plant growth"
+requirement.
+
+2/22/02
+
+Finished simple L-System implementation.
+
+3/22/02
+
+Working on Turing machine.  Paper due May 6.
+
+3/30/2002
+
+Nearly done with Turing machine.  Hope to have "bug" done or nearly
+so next week, as must get started writing.
+
+4/5/02
+
+Finished Turing counter and adder.  Gathering reference materials.
+Next week to code bug.
+
+4/15/02
+
+Title: "An abstraction of intercellular communication"
+
+4/19/02
+
+Finished bug.  Getting images for paper.
+
+3/7/03
+
+ACAL deadline in early June. Thinking of evolving cilia or hair/feathers 
+or vacuoles from cells. Vacuoles could also be used for capturing prey. Something
+from a membrane.

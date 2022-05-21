@@ -46,14 +46,14 @@ build.sh/build.bat
 To run:
 
 1. Applet:
-a. Edit morphone.html to start desired morphogen (argument of Morphogen parameter):
+a. Edit morphone.html and/or morphone_cheerpj.html to start desired morphogen (argument of Morphogen parameter, defaults to "Bug"):
    <applet code="morphone.base.Morphone.class" width=w height=h>
    <param name=Morphogen value="morphone.samples.<Morphogen class name>">
    </applet>
 b. Start morphone.html in a browser or with appletviewer.
 
 2. Application:
-java -jar morphone.jar [-morphogen morphone.samples.<Morphogen class name>]
+java -jar morphone.jar [-morphogen <Morphogen name>]
 
 Reference:
 

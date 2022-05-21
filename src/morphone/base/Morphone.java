@@ -20,7 +20,6 @@ import java.awt.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
-
 /**
  * Morphone - a morphogenesis experiment.
  * <p>
@@ -49,12 +48,17 @@ import javax.swing.event.*;
 // Main applet.
 public class Morphone extends Applet implements Parameters, Runnable
 {
+   public static final long serialVersionUID = 1;
+
    // Morphogenesis rate: milliseconds between iterations.
    static final int MIN_MORPH_DELAY = 100;
    static final int MAX_MORPH_DELAY = 1000;
 
    // Milliseconds between display updates.
    static final int DISPLAY_UPDATE_DELAY = 50;
+
+   // Morphogen name.
+   String morphogenName = null;
 
    // Organism.
    Organism organism;
@@ -102,8 +106,6 @@ public class Morphone extends Applet implements Parameters, Runnable
    // Initialize.
    public void init()
    {
-      String s;
-
       // Create display.
       screenSize = getSize();
       setLayout(new BorderLayout());
@@ -144,20 +146,20 @@ public class Morphone extends Applet implements Parameters, Runnable
       fontHeight  = fontMetrics.getHeight();
 
       // Create the organism with given morphogen.
-      if ((s = getParameter("Morphogen")) != null)
+      if ((morphogenName != null) || ((morphogenName = getParameter("Morphogen")) != null))
       {
-         showStatus("Creating organism with morphogen " + s + "...");
+         showStatus("Creating organism with morphogen " + morphogenName);
 
          try {
-            organism = new Organism(s);
+            organism = new Organism(morphogenName);
 
-            if (s.equals("Bug"))
+            if (morphogenName.equals("Bug"))
             {
                drawGrid = false;      // special case
             }
          }
          catch (Exception e) {
-            statusMessage = "Cannot create organism with morphogen " + s;
+            statusMessage = "Cannot create organism with morphogen " + morphogenName;
             showStatus(statusMessage);
          }
       }
@@ -264,7 +266,6 @@ public class Morphone extends Applet implements Parameters, Runnable
       int y;
       int x2;
       int y2;
-      int i;
 
       // Clear.
       imageGraphics.setColor(Color.white);

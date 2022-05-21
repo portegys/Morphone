@@ -21,6 +21,8 @@ import javax.swing.event.*;
 
 public class MorphoneApplication extends JFrame implements Parameters, Runnable
 {
+   public static final long serialVersionUID = 1;
+
    // Default morphogen.
    static final String DEFAULT_MORPHOGEN = "morphone.samples.Bug";
 
@@ -75,7 +77,9 @@ public class MorphoneApplication extends JFrame implements Parameters, Runnable
    public MorphoneApplication(String morphogen)
    {
       // Set title.
-      setTitle("Morphone");
+      String[] parts = morphogen.split("\\.");
+      String morphogenName = parts[parts.length - 1];
+      setTitle(morphogenName);
       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
       // Create display.
@@ -205,7 +209,6 @@ public class MorphoneApplication extends JFrame implements Parameters, Runnable
       int y;
       int x2;
       int y2;
-      int i;
 
       // Clear.
       imageGraphics.setColor(Color.white);
@@ -365,10 +368,22 @@ public class MorphoneApplication extends JFrame implements Parameters, Runnable
    // Main.
    public static void main(String[] args)
    {
-      String usage     = "Usage: java morphone.base.MorphoneApplication [-morphogen <morphone.samples.<Morphogen class name>]";
+      String usage     = "Usage: java morphone.base.MorphoneApplication [-morphogen <Morphogen class name>]";
       String morphogen = DEFAULT_MORPHOGEN;
 
-      if (args.length == 2)
+      if (args.length == 3)
+      {
+         if (args[1].equals("-morphogen"))
+         {
+            morphogen = args[2];
+         }
+         else
+         {
+            System.err.println(usage);
+            return;
+         }
+      }
+      else if (args.length == 2)
       {
          if (args[0].equals("-morphogen"))
          {
@@ -386,6 +401,7 @@ public class MorphoneApplication extends JFrame implements Parameters, Runnable
          return;
       }
 
-      MorphoneApplication morphone = new MorphoneApplication(morphogen);
+      @SuppressWarnings("unused")
+      MorphoneApplication morphone = new MorphoneApplication("morphone.samples." + morphogen);
    }
 }
